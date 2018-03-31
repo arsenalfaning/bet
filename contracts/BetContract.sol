@@ -7,6 +7,8 @@ contract BetContract {
 	uint private prevBlockNum; //开始时间
 	bool private isStopped; //合约是否已停止
 	bool private canBet; //是否可以投注
+	uint public profit;//盈利
+	address private owner; //创建者的地址
 	
 	address[] private addressBig; //所有压大的地址
 	address[] private addressSmall; //所有压小的地址
@@ -25,15 +27,17 @@ contract BetContract {
 		canBet = true;
 	}
 	
-	modifier validBet {
-        require(msg.value >= 10 finney);
-        _;
-    }
-
+	modifier onlyOwner {
+		require(msg.sender == owner);
+		_;
+	}
+	
     function BetContract() {
 		prevBlockNum = block.number;
 		isStopped = false;
 		canBet = true;
+		profit = 0;
+		owner = msg.sender;
     }
 	
 	function() payable {
@@ -42,6 +46,7 @@ contract BetContract {
 	
 	function bet(bool v) payable {
 		require(canBet);
+		require(msg.value >= 10 finney);
 		address add = msg.sender;
 		uint value = msg.value;
 		if (v) {
@@ -68,7 +73,7 @@ contract BetContract {
 	}
 	
 	//开奖
-	function result(uint seed) public payable onlyIfNotStopped onlyCanBet {
+	function result(uint seed) public payable onlyIfNotStopped onlyCanBet onlyOwner {
 		//1.查看是否满足开奖条件：a、合约未停止isStopped为false b、canBet为true c、双边都有人投注
 		require(addressBig.length > 0 && addressSmall.length > 0 );
 		//2.设置canBet为false
@@ -92,6 +97,7 @@ contract BetContract {
 			}
 		}
 		all = 99 * all / 100;
+		profit = all / 99;
 		//c、按比例派发奖金
 		for (i = 0; i < addressBig.length; i ++) {
 			address k = addressBig[i];
@@ -121,6 +127,11 @@ contract BetContract {
 	
 	function countBet() public view returns(uint, uint) {
 		return (addressBig.length, addressSmall.length);
+	}
+	
+	//提现
+	function getMoney() payable onlyOwner {
+		owner.transfer(profit);
 	}
 	
 	function randomGen(uint seed) internal returns (uint){
