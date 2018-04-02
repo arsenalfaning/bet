@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>赌大小游戏</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(window).load(function() {
+                if (typeof window.web3 !== 'undefined') {
+                    window.currentProvider = web3.currentProvider;
+                    window.web3 = new Web3(web3.currentProvider);
+                    $.getJSON('BetContract.json', function(data) {
+                        var BetContract = data;
+                        window.BetContract = TruffleContract(BetContract);
+                        window.BetContract.setProvider(window.currentProvider);
+                        //展示定时器
+                        window.setInterval(function () {
+                            window.BetContract.deployed().then(function(instance) {
+                                window.adoptionInstance = instance;
+                                return adoptionInstance.myBet();
+                            }).then(function(result) {
+                                console.log(result)
+                                $("div").append(result);
+                            }).catch(function(err) {
+                                console.log(err);
+                            });
+                        }, 5000);
+                        $("#change").click(function () {
+                            web3.eth.sendTransaction({from: web3.eth.accounts[0], to: "0x345ca3e014aaf5dca488057592ee47305d9b3e10", value: web3.toWei(30,"ether"), gas: 180000, data: web3.toHex(1) }, function (err, address) {
+                                console.log(err)
+                                console.log(address)
+                            });
+//                            window.BetContract.deployed().then(function(instance) {
+//                                window.adoptionInstance = instance;
+//                                return adoptionInstance.bet(true);
+//                            }).then(function(result) {
+//                                console.log(result)
+//                            }).catch(function(err) {
+//                                console.log(err);
+//                            });
+                        })
+                        $("#change2").click(function () {
+                            web3.eth.sendTransaction({from: web3.eth.accounts[0], to: "0x345ca3e014aaf5dca488057592ee47305d9b3e10", value: web3.toWei(30,"ether"), gas: 180000 }, function (err, address) {
+                                console.log(err)
+                                console.log(address)
+                            });
+                        })
+                        $("#result").click(function () {
+                            window.BetContract.deployed().then(function(instance) {
+                                window.adoptionInstance = instance;
+                                return adoptionInstance.result(new Date().getTime());
+                            }).then(function(result) {
+                                console.log(result)
+                            }).catch(function(err) {
+                                console.log(err);
+                            });
+                        })
+                        $("#countBet").click(function () {
+                            window.BetContract.deployed().then(function(instance) {
+                                window.adoptionInstance = instance;
+                                return adoptionInstance.countBet();
+                            }).then(function(result) {
+                                console.log(result)
+                            }).catch(function(err) {
+                                console.log(err);
+                            });
+                        })
+                        $("#getMoney").click(function () {
+                            window.BetContract.deployed().then(function(instance) {
+                                window.adoptionInstance = instance;
+                                return adoptionInstance.getMoney();
+                            }).then(function(result) {
+                                console.log(result)
+                            }).catch(function(err) {
+                                console.log(err);
+                            });
+                        })
+                        $("#profit").click(function () {
+                            window.BetContract.deployed().then(function(instance) {
+                                window.adoptionInstance = instance;
+                                return adoptionInstance.profit();
+                            }).then(function(result) {
+                                console.log(result)
+                            }).catch(function(err) {
+                                console.log(err);
+                            });
+                        })
+                    });
+
+                } else {
+                    alert("请安装MetaMask插件！")
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<input type="button" id="change" value="我压大">
+<input type="button" id="change2" value="我压小">
+<input type="button" id="result" value="开奖">
+<input type="button" id="countBet" value="查看投注人数">
+<input type="button" id="profit" value="查看盈利">
+<input type="button" id="getMoney" value="提现">
+<div></div>
+</body>
+</html>
