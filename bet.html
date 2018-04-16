@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>赌大小游戏</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script type="text/javascript">
-        $(function() {
+        $1(function() {
             $(window).load(function() {
                 if (typeof window.web3 !== 'undefined') {
                     window.currentProvider = web3.currentProvider;
@@ -32,7 +33,7 @@
                             });
                         }, 5000);
                         $("#change").click(function () {
-                            web3.eth.sendTransaction({from: web3.eth.accounts[0], to: "0x345ca3e014aaf5dca488057592ee47305d9b3e10", value: web3.toWei(30,"ether"), gas: 180000, data: web3.toHex(1) }, function (err, address) {
+                            web3.eth.sendTransaction({from: web3.eth.accounts[0], to: "0xe73e4a982307d5c7191fe49906289207a6f300f6", value: web3.toWei(30,"ether"), gas: 180000, data: web3.toHex(1) }, function (err, address) {
                                 console.log(err)
                                 console.log(address)
                             });
@@ -46,7 +47,7 @@
 //                            });
                         })
                         $("#change2").click(function () {
-                            web3.eth.sendTransaction({from: web3.eth.accounts[0], to: "0x345ca3e014aaf5dca488057592ee47305d9b3e10", value: web3.toWei(30,"ether"), gas: 180000 }, function (err, address) {
+                            web3.eth.sendTransaction({from: web3.eth.accounts[0], to: "0xe73e4a982307d5c7191fe49906289207a6f300f6", value: web3.toWei(30,"ether"), gas: 180000 }, function (err, address) {
                                 console.log(err)
                                 console.log(address)
                             });
@@ -101,12 +102,120 @@
     </script>
 </head>
 <body>
-<input type="button" id="change" value="我压大">
-<input type="button" id="change2" value="我压小">
 <input type="button" id="result" value="开奖">
 <input type="button" id="countBet" value="查看投注人数">
 <input type="button" id="profit" value="查看盈利">
 <input type="button" id="getMoney" value="提现">
-<div></div>
+<div class="container">
+    <div class="text-center"><span>运气是实力的一部分！！</span></div>
+    <div class="row">
+        <div class="col-3">
+            <div>欢迎你，王大锤</div>
+            <div>我的余额：250</div>
+            <div>
+                <button class="btn btn-success">充值</button>
+                <button class="btn btn-danger">提现</button>
+            </div>
+        </div>
+        <div class="col-9">
+            <div>
+                <div>倒计时：<span>00:09:39</span></div>
+                <div>开奖时间：2018-04-12 12:20:00</div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-success" id="change" data-toggle="modal" data-target="#buyBigModal">买大</button>
+                    当前赔率：2.0
+                </div>
+                <div class="col">
+                    <button class="btn btn-success" id="change2"  data-toggle="modal" data-target="#buySmallModal">买小</button>
+                    当前赔率：2.0
+                </div>
+            </div>
+            <div>当前奖池：<span>4767465746753</span></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h5>我的投注</h5>
+            <dl>
+                <dt>开奖时间：</dt><dd>2018-04-12 12:10:00</dd>
+                <dt>开奖结果：</dt><dd>6点大</dd>
+                <dt>最终赔率：</dt><dd>2.8倍</dd>
+                <dt>投注金额：</dt><dd>50</dd>
+                <dt>中奖情况：</dt><dd>未中奖</dd>
+            </dl>
+        </div>
+        <div class="col">
+            <h5>最近开奖</h5>
+            <dl>
+                <dt>开奖时间：</dt><dd>2018-04-12 12:10:00</dd>
+                <dt>开奖结果：</dt><dd>6点大</dd>
+                <dt>最终赔率：</dt><dd>2.8倍</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框 买大 -->
+<div class="modal fade" id="buyBigModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">投注</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <dl>
+                    <dt>投注量：</dt>
+                    <dd><input type="number" class="form-control"></dd>
+                    <dt>投注：</dt>
+                    <dd>买大</dd>
+                    <dt>开奖时间：</dt>
+                    <dd>2018-04-12 12:20:00</dd>
+                    <dt>注：</dt>
+                    <dd><mark>最终赔率由大小两方各自支持数量决定！</mark></dd>
+                </dl>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定投注</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消投注</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- 模态框 买小 -->
+<div class="modal fade" id="buySmallModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">模态框头部</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                模态框内容..
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
