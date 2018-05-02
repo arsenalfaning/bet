@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>区块链博彩</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "Microsoft YaHei";
+        }
+        .banner {
+            background-color: #cc5252;
+            color: #fff;
+            font-family: HYi4gf;
+            text-align: center;
+            height: 88px;
+            line-height: 88px;
+            font-size: 32px;
+        }
+        .content {
+            width: 1000px;
+            margin: 30px auto;
+            position: relative;
+        }
+        .home {
+            height: 580px;
+            width: 256px;
+            border: 3px solid rgb(238, 230, 236);
+            border-radius: 10px;
+            position: relative;
+        }
+        .font {
+            font-size: 24px;
+            color: #cc5252;
+        }
+        .font2 {
+            font-size: 36px;
+            color: #666;
+        }
+        .font3 {
+            font-size: 24px;
+            color: #666;
+        }
+        .home .name {
+            text-align: center;
+            height: 130px;
+            line-height: 130px;
+            border-bottom: 3px solid rgb(238, 230, 236);
+        }
+        .balance {
+            text-align: center;
+        }
+        .balance .label {
+            padding-top: 150px;
+            margin-bottom: 20px;
+        }
+        .balance .value {
+            line-height: 36px;
+        }
+        .home .operation {
+            position: absolute;
+            left: -3px;
+            bottom: -3px;
+            height: 64px;
+            line-height: 64px;
+            width: 262px;
+        }
+        .home .operation a {
+            width: 50%;
+            display: inline-block;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .home .operation .first {
+            background-color: #cc5252;
+            color: #fefefe;
+            float: left;
+            border-bottom-left-radius: 10px;
+        }
+        .home .operation .second {
+            background-color: rgb(238, 238, 238);
+            color: #cc5252;
+            float: right;
+            border-bottom-right-radius: 10px;
+        }
+        .market {
+            text-align: center;
+            width: 660px;
+            position: absolute;
+            height: 580px;
+            top: 0;
+            right: 0;
+        }
+        .clock {
+            background: url("img/clock_ic.png") center no-repeat;
+            height: 124px;
+            line-height: 124px;
+            position: relative;
+            width: 200px;
+            display: inline-block;
+        }
+        .clock img{
+            vertical-align: middle;
+            position: absolute;
+            top: 32px;
+        }
+        .clock img.hour1 {
+            left: 16px;
+        }
+        .clock img.hour2 {
+            left: 41px;
+        }
+        .clock img.hourm {
+            left: 68px;
+            top: 48px;
+        }
+        .clock img.min1 {
+            left: 76px;
+        }
+        .clock img.min2 {
+            left: 101px;
+        }
+        .clock img.minm {
+            left: 128px;
+            top: 48px;
+        }
+        .clock img.second1 {
+            left: 136px;
+        }
+        .clock img.second2 {
+            left: 161px;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            function shi(n) {
+                return Math.floor(n/10);
+            }
+            function ge(n) {
+                return n %10;
+            }
+            function toggle(b) {
+                var m = $(".minm");
+                var s = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAKAgMAAADulRedAAAACVBMVEVOTU4AAABOTU6dKBVYAAAAAnRSTlNgABNupp8AAAATSURBVAjXY1gFhgwMoUDIAOEBAC6QBKdGI0yUAAAAAElFTkSuQmCC";
+                if (b) {
+                    m.removeAttr("src")
+                } else {
+                    m.attr("src", s)
+                }
+                m = $(".hourm")
+                if (b) {
+                    m.removeAttr("src")
+                } else {
+                    m.attr("src", s)
+                }
+            }
+            var base64 = [
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAAOVBMVEUAAABOTU7k495OTU5OTU5OTU5OTU5WVVZOTU5OTU5OTU7k495OTU5OTU5OTU7k495OTU5OTU7k496LQ2uJAAAAEXRSTlMAwHDQZlm+evbrz74KtLOICDMSCO0AAABrSURBVCjP7dNJDoAgEETRUmlwYCruf1hxZxt6r4l/+UJISCj0HFUOUKpcZNW6inTl5vbl1u42Ckh6qHyniyfN089jzmSYVYHMiD4cTXUEH4Fa2qNSYZ1Oo7vTix7/BR78b2MNxnaMpRm7PAGYfBepoWU3uAAAAABJRU5ErkJggg==",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAAWlBMVEUAAADk495OTU7k497k497k497k497k497k495OTU7k495OTU7k497k497k495UU1Tk495WVVWlpKHk495OTU7k497k495OTU5OTU5OTU6ysa6ZmJbk495OTU5ooT91AAAAHHRSTlMAwMBw0Gb2zwkJ6+u0iH19eHheW1taV1e0s2NaYp2zwAAAAG5JREFUKM/tk7cOgDAMBV+A0HsLxf7/3yQjhkRiBIkbz5YlDweLJoEGhBV+nmJp490AA+U6iU4kfcEj7FhBEDDzr5/rkqgNBR3zilTVigSqCTIgrehClcGz7b69vOj5r+p7DZutwdVOb3ylebo8AKRoJlqIBwAKAAAAAElFTkSuQmCC",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAAWlBMVEUAAABOTU7k495OTU5OTU5OTU5OTU5OTU5OTU5OTU7a2dTk495OTU5OTU5OTU5OTU5OTU6JiIfk497k497k495OTU6ZmJbk497k497e3diZmJaIh4ZOTU7k494CMML1AAAAHHRSTlMAwMBw0GRZ9s9peuvrtIh9eGNbVwoKCLSzfVpao9gA5wAAAH9JREFUKM/t00kSgzAQQ1HZxA2YIcyZ1Pe/ZpysaFdRxQF4S2n9kdQ0avwFZgKS+V3SKEWASZuxuu1UoaVAVT0MR/Kaz89P1VgYA9lh8dHRcHe3AlvPTL8BazppuJdf0JFDYUTVB343DK+q13x+FrbB1jA2OgEieTuf+ai0gy6/nhAmVm7BCNUAAAAASUVORK5CYII=",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAAV1BMVEUAAABOTU7k495OTU5OTU5OTU5OTU5OTU5OTU7a2dTk495OTU7k495OTU5OTU6SkZDk495OTU6ZmJZOTU7k495OTU7k495OTU7k495OTU7e3dhOTU7k495eVmthAAAAG3RSTlMAwMBw0Gb2z3p6CQnr64hjW1taWldXtLSzs32FXBCZAAAAbElEQVQoz+2TSQqEQBAEs3um3fdds/7/TvVmSQseFYxjUBTkIbDhqHCAssp3TaBt0PZAJVkZ/g+ELmcNEbFQGJKfvq8nkfiniMgZiY0NFSYyKZAUPFHs1i6+68H3e3zQ+Ldqfw3+dq5Ku+hyBR70JPfbi2X4AAAAAElFTkSuQmCC",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAAV1BMVEUAAABOTU7k495OTU7k497k495cW1vk495OTU5OTU5OTU5OTU5OTU5OTU5OTU6gn5zk496ZmJbk495OTU7k497e3djc29eysa6qqabk497k495OTU7k495QXv++AAAAG3RSTlMAwNBwwGYJ9ut9eFtXs4hjWlrrtLN9eGNaVwo70C3YAAAAd0lEQVQoz+3TSQ6DMBBE0TLBhoCZMifV9z9nOsvCQeIA/OWTZfWm4EWTIiAqnpdGtVky0LOdKmlq2YNkgBScDt7PA9mdpI4ckMI5UHJIQBq5anT91Pd/r29mj+LvK8ysLi85eD/PdomV9PytAe95vZ1X3l6ae6lfNnAkwFF+tSwAAAAASUVORK5CYII=",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAATlBMVEUAAABOTU7k495OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU7k495xcG/k495OTU5OTU5OTU7e3djc29eSkZCZmJbk497k497k495OTU7k4968/cAGAAAAGHRSTlMAwMBw0GRZ9s96aVkJ6+u0iH14Y1oKtLMoytXrAAAAfklEQVQoz+3TSw6DMBCDYSdtAiHhDa19/4uWdtWJhMQB+Ja/ZpbGoaPR4SewEnCIsbG12fJROYT2+adde2WQdDC8pDtfzyOZHsYivVFccjTc7HegTKxMBdj9XF8nV/CSloeRyBGSPIzv852v56x+tWsIAyOQt3o7MZ4t7WSXHyklITIYRv6bAAAAAElFTkSuQmCC",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAAUVBMVEUAAABOTU5OTU5OTU7k495OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU7k497k495OTU7e3djc29eSkZDk496ZmJbk497k495OTU7k496VN3/AAAAAGXRSTlMAwNBwwFlrZAn26314tIjrs7N9eGNbWlcKWHd3pgAAAHdJREFUKM/t00sOwjAMhOEx1Ela2vJ+jO9/UCxWuBipB+i3/BVF3gxcYVDwUblQ4VR7Bv3j6ZVD3QW3o91BUhB0Zrbl9flMjmX/pVzNTmhyEAZy6V5Am7kwNySvPTRMP3+P5JRcIp62vDona6gDNduO6t+l5bt8A/OlIcnefsvoAAAAAElFTkSuQmCC",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAAYFBMVEUAAADk495OTU7k497k495OTU5OTU7k497k495OTU7k495OTU7k495OTU7k495OTU5OTU5OTU7k497k495UU1Tk495WVVVOTU7k497k496ysa6SkZCqqaaZmJbk495OTU53DxM2AAAAHnRSTlMAwMBv0NBmZFlbCQn29uvrz7SIfX14eFe0s2NjWlqkd74yAAAAeklEQVQoz+3Tyw6CMBCF4VPUtiAg4gWvp+//lo47D0LCEhK+5Z92klkMjE/CA1Klx3eltco7q6yfze5H4w8pB0kHkdmPNU/Pd/KyEdeUjijcyVG4c7YHipY9rdWR17fB2TNafqk5sg5b8fheA2IsKcpXBxPYE2Cs/9cPgd8pQ3WXb6kAAAAASUVORK5CYII=",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApBAMAAADDtsRwAAAALVBMVEUAAABOTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU6/CqGQAAAADnRSTlMAwNBvZFm+egn26720iOpPqs8AAABgSURBVBjTY2BgeQcBDgwMDH5Q9hMGBtZIKHtqAEPcEiUI8HrK8O41AwTse8fw7iGULTf42OeeG0NA3RuGtjKoX9IzGDjuQdlvG5DFkdUPCvfjZCPCHzlekOMLOR6R4xcASXamfMDpEScAAAAASUVORK5CYII=",
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAApCAMAAAAGRilxAAAAVFBMVEUAAABOTU5OTU5OTU7k495OTU5cW1tOTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU5OTU6VlJPk495OTU7k497e3djc29fk497k497k495OTU7k496hhuHqAAAAGnRSTlMAwNBwwFoJ9mll6314Y1eziF7rtLN9eFtXCqbw+doAAABzSURBVCjP7dNJDoQwDETRSjcJ8zyX739PLHYmIHEA3vIrirwpqIxGhlPOixyq8SmN1DeAZ1H/jLqgB0kHw2n68vvcktXfqMgWwZWOhoYAhI4XndY9me9eTyJL9PcIEUniS778Pq8y9DdrwNbH23la2sMuDz8ZIzPLypM6AAAAAElFTkSuQmCC"
+            ];
+            var prev = -1;
+            setInterval(function () {
+                var date = new Date();
+                $(".second2").attr("src", base64[ge(date.getSeconds())]);
+                $(".second1").attr("src", base64[shi(date.getSeconds())]);
+                $(".min2").attr("src", base64[ge(date.getMinutes())]);
+                $(".min1").attr("src", base64[shi(date.getMinutes())]);
+                $(".hour2").attr("src", base64[ge(date.getHours())]);
+                $(".hour1").attr("src", base64[shi(date.getHours())]);
+                toggle(prev == ge(date.getSeconds()));
+                prev = ge(date.getSeconds());
+            }, 500)
+        });
+    </script>
+</head>
+<body>
+    <div class="banner">运气是实力的一部分</div>
+    <div class="content">
+        <div class="home">
+            <div class="name font">欢迎您，王之涣</div>
+            <div class="balance">
+                <div class="label font">余额</div>
+                <div class="value font2">2548.00</div>
+            </div>
+            <div class="operation">
+                <a class="first">充值</a>
+                <a class="second">提现</a>
+            </div>
+        </div>
+        <div class="market">
+            <div class="count-down">
+                <div class="font3">开奖倒计时</div>
+                <div class="clock">
+                    <img class="hour1">
+                    <img class="hour2">
+                    <img class="hourm">
+                    <img class="min1">
+                    <img class="min2">
+                    <img class="minm">
+                    <img class="second1">
+                    <img class="second2">
+                </div>
+            </div>
+            <div class="beg-big"></div>
+        </div>
+    </div>
+</body>
+</html>
