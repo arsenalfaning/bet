@@ -132,6 +132,43 @@
         .clock img.second2 {
             left: 161px;
         }
+        .beg-big {
+            width: 300px;
+            height: 280px;
+            color: #cc5252;
+            border: 2px solid #cc5252;
+            border-radius: 10px;
+            padding-top: 20px;
+            float: left;
+            cursor: pointer;
+        }
+        .beg-font {
+            font-size: 150px;
+        }
+        .beg-odds {
+            font-size: 26px;
+        }
+        .beg-small {
+            width: 300px;
+            height: 280px;
+            color: #cc8e52;
+            border: 2px solid #cc8e52;
+            border-radius: 10px;
+            padding-top: 20px;
+            float: right;
+            cursor: pointer;
+        }
+        .pool {
+            height: 88px;
+            width: 658px;
+            position: absolute;
+            bottom: 0;
+            color: #ffffff;
+            font-size: 36px;
+            line-height: 86px;
+            background-color: rgb(254, 211, 117);
+            border-radius: 10px;
+        }
     </style>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="application/javascript">
@@ -212,7 +249,17 @@
                     <img class="second2">
                 </div>
             </div>
-            <div class="beg-big"></div>
+            <div class="beg-big">
+                <div class="beg-font">大</div>
+                <div class="beg-odds">当前赔率：2.0</div>
+            </div>
+            <div class="beg-small">
+                <div class="beg-font">小</div>
+                <div class="beg-odds">当前赔率：2.0</div>
+            </div>
+            <div class="pool">
+                当前奖池：456,789,000.8976
+            </div>
         </div>
     </div>
 </body>
