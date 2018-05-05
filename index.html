@@ -169,6 +169,53 @@
             background-color: rgb(254, 211, 117);
             border-radius: 10px;
         }
+        .info {
+            height: 500px;
+            width: 100%;
+            margin-top: 40px;
+        }
+        .card {
+            box-shadow: 0px 0px 20px #ddd;
+            width: 480px;
+            height: 500px;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+        .card .title {
+            width: 164px;
+            display: inline-block;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            background-color: #cc5252;
+            color: #fff;
+            font-size: 24px;
+            height: 44px;
+            line-height: 44px;
+            border-radius: 5px;
+        }
+        .card .item {
+            text-align: left;
+            font-size: 18px;
+            width: 288px;
+            color: #666666;
+            margin: 0 auto;
+            line-height: 30px;
+            border-bottom: 3px solid rgb(236, 236, 236);
+            padding: 10px 0;
+        }
+        .card .item:last-child {
+            border-width: 0;
+        }
+        .card dt, .card dd {
+            display: inline-block;
+        }
+        .card dd {
+            margin-left: 10px;
+        }
+        .right {
+            float: right;
+        }
     </style>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="application/javascript">
@@ -259,6 +306,100 @@
             </div>
             <div class="pool">
                 当前奖池：456,789,000.8976
+            </div>
+        </div>
+        <div class="info">
+            <div class="card">
+            <div class="title">我的投注</div>
+            <div class="item">
+                <dl>
+                    <dt>开奖时间：</dt>
+                    <dd>2018-04-12 12:10:00</dd>
+                </dl>
+                <dl>
+                    <dt>开奖结果：</dt>
+                    <dd>6点大</dd>
+                </dl>
+                <dl>
+                    <dt>最终赔率：</dt>
+                    <dd>2.8</dd>
+                </dl>
+                <dl>
+                    <dt>投注金额：</dt>
+                    <dd>50.00</dd>
+                </dl>
+                <dl>
+                    <dt>中奖情况：</dt>
+                    <dd>未中奖</dd>
+                </dl>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt>开奖时间：</dt>
+                    <dd>2018-04-12 12:10:00</dd>
+                </dl>
+                <dl>
+                    <dt>开奖结果：</dt>
+                    <dd>6点大</dd>
+                </dl>
+                <dl>
+                    <dt>最终赔率：</dt>
+                    <dd>2.8</dd>
+                </dl>
+                <dl>
+                    <dt>投注金额：</dt>
+                    <dd>50.00</dd>
+                </dl>
+                <dl>
+                    <dt>中奖情况：</dt>
+                    <dd>未中奖</dd>
+                </dl>
+            </div>
+        </div>
+            <div class="card right">
+                <div class="title">最近开奖</div>
+                <div class="item">
+                    <dl>
+                        <dt>开奖时间：</dt>
+                        <dd>2018-04-12 12:10:00</dd>
+                    </dl>
+                    <dl>
+                        <dt>开奖结果：</dt>
+                        <dd>6点大</dd>
+                    </dl>
+                    <dl>
+                        <dt>最终赔率：</dt>
+                        <dd>2.8</dd>
+                    </dl>
+                </div>
+                <div class="item">
+                    <dl>
+                        <dt>开奖时间：</dt>
+                        <dd>2018-04-12 12:10:00</dd>
+                    </dl>
+                    <dl>
+                        <dt>开奖结果：</dt>
+                        <dd>6点大</dd>
+                    </dl>
+                    <dl>
+                        <dt>最终赔率：</dt>
+                        <dd>2.8</dd>
+                    </dl>
+                </div>
+                <div class="item">
+                    <dl>
+                        <dt>开奖时间：</dt>
+                        <dd>2018-04-12 12:10:00</dd>
+                    </dl>
+                    <dl>
+                        <dt>开奖结果：</dt>
+                        <dd>6点大</dd>
+                    </dl>
+                    <dl>
+                        <dt>最终赔率：</dt>
+                        <dd>2.8</dd>
+                    </dl>
+                </div>
             </div>
         </div>
     </div>
