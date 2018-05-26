@@ -267,6 +267,97 @@
             }, 500)
         });
     </script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (typeof window.web3 !== 'undefined') {
+                window.currentProvider = web3.currentProvider;
+                window.web3 = new Web3(web3.currentProvider);
+                $.getJSON('build/contracts/BetContract.json', function(data) {
+                    var BetContract = data;
+                    window.BetContract = TruffleContract(BetContract);
+                    window.BetContract.setProvider(window.currentProvider);
+                    //展示定时器
+                    window.setInterval(function () {
+                        window.BetContract.deployed().then(function(instance) {
+                            window.adoptionInstance = instance;
+                            return adoptionInstance.myBet();
+                        }).then(function(result) {
+                            console.log(result)
+                            $("div").append(result);
+                        }).catch(function(err) {
+                            console.log(err);
+                        });
+                    }, 5000);
+                    $("#change").click(function () {
+                        web3.eth.sendTransaction({from: web3.eth.accounts[0], to: "0xde57fbe4d1e7f61d968f5f5730bd805cbefa5b5b", value: web3.toWei(30,"ether"), gas: 180000, data: web3.toHex(1) }, function (err, address) {
+                            console.log(err)
+                            console.log(address)
+                        });
+//                            window.BetContract.deployed().then(function(instance) {
+//                                window.adoptionInstance = instance;
+//                                return adoptionInstance.bet(true);
+//                            }).then(function(result) {
+//                                console.log(result)
+//                            }).catch(function(err) {
+//                                console.log(err);
+//                            });
+                    })
+                    $("#change2").click(function () {
+                        console.log("1234");
+                        web3.eth.sendTransaction({from: web3.eth.accounts[0], to: "0xde57fbe4d1e7f61d968f5f5730bd805cbefa5b5b", value: web3.toWei(30,"ether"), gas: 180000 }, function (err, address) {
+                            console.log(err)
+                            console.log(address)
+                        });
+                    })
+                    $("#result").click(function () {
+                        window.BetContract.deployed().then(function(instance) {
+                            window.adoptionInstance = instance;
+                            return adoptionInstance.result(new Date().getTime());
+                        }).then(function(result) {
+                            console.log(result)
+                        }).catch(function(err) {
+                            console.log(err);
+                        });
+                    })
+                    $("#countBet").click(function () {
+                        window.BetContract.deployed().then(function(instance) {
+                            window.adoptionInstance = instance;
+                            return adoptionInstance.countBet();
+                        }).then(function(result) {
+                            console.log(result)
+                        }).catch(function(err) {
+                            console.log(err);
+                        });
+                    })
+                    $("#getMoney").click(function () {
+                        window.BetContract.deployed().then(function(instance) {
+                            window.adoptionInstance = instance;
+                            return adoptionInstance.getMoney();
+                        }).then(function(result) {
+                            console.log(result)
+                        }).catch(function(err) {
+                            console.log(err);
+                        });
+                    })
+                    $("#profit").click(function () {
+                        window.BetContract.deployed().then(function(instance) {
+                            window.adoptionInstance = instance;
+                            return adoptionInstance.profit();
+                        }).then(function(result) {
+                            console.log(result)
+                        }).catch(function(err) {
+                            console.log(err);
+                        });
+                    })
+                });
+
+            } else {
+                alert("请安装MetaMask插件！")
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="banner">运气是实力的一部分</div>
@@ -296,11 +387,11 @@
                     <img class="second2">
                 </div>
             </div>
-            <div class="beg-big">
+            <div class="beg-big" id="change">
                 <div class="beg-font">大</div>
                 <div class="beg-odds">当前赔率：2.0</div>
             </div>
-            <div class="beg-small">
+            <div class="beg-small" id="change2">
                 <div class="beg-font">小</div>
                 <div class="beg-odds">当前赔率：2.0</div>
             </div>
@@ -403,5 +494,6 @@
             </div>
         </div>
     </div>
+    <input type="button" id="result" value="开奖">
 </body>
 </html>
